@@ -28,3 +28,9 @@
     csr_path: "{{ca_csr_path}}"
     provider: selfsigned
   when: not cert_file_result.stat.exists
+
+- name: download CA certificate
+  fetch:
+    src: "{{ca_cert_path}}"
+    dest: "{{download_dir}}/{{ca_name}}.pem"
+    flat: yes

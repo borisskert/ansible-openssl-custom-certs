@@ -21,7 +21,8 @@ Creates self-signed certificates with OpenSSL
 | working_directory | text | no     | /srv/openssl | Directory to which the CA and CSRs are saved |
 | certificates_directory | text | no     | /srv/openssl/certs | Directory to which the certificates and keys are saved |
 | sites                  | array of texts | no | []           | The sites for which certificates will be created       |
-| ca_name                | text | no      | my_CA             | Your e-mail address                                    |
+| ca_name                | text | no      | my_CA             | Your certificate name                                  |
+| download_dir           | text | no      | ./.tmp            | Download directory where the created CA cert will be stored locally |
 
 ## Example Playbook
 

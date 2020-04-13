@@ -5,3 +5,5 @@ certificates_directory: /srv/openssl/certs
 sites: []
 
 ca_name: my_CA
+
+download_dir: ./.tmp
