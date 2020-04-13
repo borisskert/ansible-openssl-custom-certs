@@ -1,0 +1,15 @@
+---
+galaxy_info:
+  author: borisskert
+  description: Create custom self signed SSL certificates
+  min_ansible_version: 2.9
+  platforms:
+  - name: Ubuntu
+    versions:
+    - trusty
+    - xenial
+  categories:
+  - development
+  - packaging
+  - system
+dependencies: []

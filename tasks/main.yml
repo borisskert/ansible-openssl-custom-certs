@@ -1,0 +1,16 @@
+---
+- include: create_volumes.yml
+
+- name: install pip for python 3
+  apt:
+    name: python3-pip
+    update_cache: yes
+
+- name: install docker pip package
+  pip:
+    name: pyOpenSSL
+
+- include: create-ca.yml
+
+- include: create-ca-signed-cert.yml
+  with_items: "{{sites}}"

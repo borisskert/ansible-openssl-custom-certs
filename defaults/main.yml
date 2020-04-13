@@ -1,0 +1,6 @@
+---
+volume: /srv/openssl
+
+sites: []
+
+ca_name: my_CA

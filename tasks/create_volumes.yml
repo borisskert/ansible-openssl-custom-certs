@@ -1,0 +1,32 @@
+---
+- name: create volume directory
+  file:
+    path: "{{volume}}"
+    state: directory
+    owner: root
+    group: root
+    mode: 775
+
+- name: create csr directory
+  file:
+    path: "{{volume}}/csr"
+    state: directory
+    owner: root
+    group: root
+    mode: 775
+
+- name: create crt directory
+  file:
+    path: "{{volume}}/crt"
+    state: directory
+    owner: root
+    group: root
+    mode: 775
+
+- name: create private directory
+  file:
+    path: "{{volume}}/private"
+    state: directory
+    owner: root
+    group: root
+    mode: 750
