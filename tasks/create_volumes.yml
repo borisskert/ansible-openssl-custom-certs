@@ -25,7 +25,7 @@
 
 - name: create certs directory
   file:
-    path: "{{working_directory}}/certs"
+    path: "{{certificates_directory}}"
     state: directory
     owner: root
     group: root

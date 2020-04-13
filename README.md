@@ -18,9 +18,10 @@ Creates self-signed certificates with OpenSSL
 
 | Variable      | Type | Mandatory? | Default | Description           |
 |---------------|------|------------|---------|-----------------------|
-| working_directory | text | no     | /srv/openssl | Directory to which the certificates and keys are saved |
-| sites             | array of texts | no          | [] | The sites for which certificates will be created  |
-| ca_name           | text | no      | my_CA       | Your e-mail address                                    |
+| working_directory | text | no     | /srv/openssl | Directory to which the CA and CSRs are saved |
+| certificates_directory | text | no     | /srv/openssl/certs | Directory to which the certificates and keys are saved |
+| sites                  | array of texts | no | []           | The sites for which certificates will be created       |
+| ca_name                | text | no      | my_CA             | Your e-mail address                                    |
 
 ## Example Playbook
 
@@ -49,7 +50,7 @@ Usage (with parameters):
 - hosts: test_machine
 
   roles:
-    - role: ansible-custom-certificates
+    - role: create-self-signed-certs
       ca_name: site.org
       sites:
         - my.first.site.org

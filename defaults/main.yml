@@ -1,5 +1,6 @@
 ---
 working_directory: /srv/openssl
+certificates_directory: /srv/openssl/certs
 
 sites: []
 
