@@ -6,7 +6,7 @@
     name: python3-pip
     update_cache: yes
 
-- name: install docker pip package
+- name: install pyOpenSSL pip package
   pip:
     name: pyOpenSSL
 
