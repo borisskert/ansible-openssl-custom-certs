@@ -7,11 +7,20 @@
 
 - name: Setup variables for Cert
   set_fact:
-    ca_private_key_path: "{{volume}}/private/{{ca_name}}.pem"
-    ca_cert_path: "{{volume}}/crt/{{ca_name}}.crt"
-    cert_private_key_path: "{{volume}}/private/{{item}}.pem"
+    ca_private_key_path: "{{volume}}/ca/{{ca_name}}.pem"
+    ca_cert_path: "{{volume}}/ca/{{ca_name}}.crt"
     cert_csr_path: "{{volume}}/csr/{{item}}.csr.pem"
-    cert_path: "{{volume}}/crt/{{item}}.crt"
+    cert_private_key_path: "{{volume}}/certs/{{item}}/privkey.pem"
+    cert_path: "{{volume}}/certs/{{item}}/fullchain.pem"
+    trust_cert_path: "{{volume}}/certs/{{item}}/chain.pem"
+
+- name: create certificate directory
+  file:
+    path: "{{volume}}/certs/{{item}}"
+    state: directory
+    owner: root
+    group: root
+    mode: 755
 
 - name: Generate an OpenSSL RSA private key
   openssl_privatekey:
@@ -31,3 +40,9 @@
     ownca_path: "{{ca_cert_path}}"
     ownca_privatekey_path: "{{ca_private_key_path}}"
     provider: ownca
+
+- name: Create the hard link to CA
+  file:
+    src: "{{ca_cert_path}}"
+    dest: "{{trust_cert_path}}"
+    state: hard

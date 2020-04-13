@@ -15,18 +15,18 @@
     group: root
     mode: 775
 
-- name: create crt directory
+- name: create ca directory
   file:
-    path: "{{volume}}/crt"
+    path: "{{volume}}/ca"
     state: directory
     owner: root
     group: root
     mode: 775
 
-- name: create private directory
+- name: create certs directory
   file:
-    path: "{{volume}}/private"
+    path: "{{volume}}/certs"
     state: directory
     owner: root
     group: root
-    mode: 750
+    mode: 755
