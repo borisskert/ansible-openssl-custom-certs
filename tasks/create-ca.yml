@@ -1,9 +1,9 @@
 ---
 - name: Setup variables for CA
   set_fact:
-    ca_private_key_path: "{{volume}}/ca/{{ca_name}}.pem"
-    ca_csr_path: "{{volume}}/csr/{{ca_name}}.csr.pem"
-    ca_cert_path: "{{volume}}/ca/{{ca_name}}.crt"
+    ca_private_key_path: "{{working_directory}}/ca/{{ca_name}}.pem"
+    ca_csr_path: "{{working_directory}}/csr/{{ca_name}}.csr.pem"
+    ca_cert_path: "{{working_directory}}/ca/{{ca_name}}.crt"
 
 - name: Generate an OpenSSL RSA private key
   openssl_privatekey:

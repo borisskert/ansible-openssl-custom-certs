@@ -7,16 +7,16 @@
 
 - name: Setup variables for Cert
   set_fact:
-    ca_private_key_path: "{{volume}}/ca/{{ca_name}}.pem"
-    ca_cert_path: "{{volume}}/ca/{{ca_name}}.crt"
-    cert_csr_path: "{{volume}}/csr/{{item}}.csr.pem"
-    cert_private_key_path: "{{volume}}/certs/{{item}}/privkey.pem"
-    cert_path: "{{volume}}/certs/{{item}}/fullchain.pem"
-    trust_cert_path: "{{volume}}/certs/{{item}}/chain.pem"
+    ca_private_key_path: "{{working_directory}}/ca/{{ca_name}}.pem"
+    ca_cert_path: "{{working_directory}}/ca/{{ca_name}}.crt"
+    cert_csr_path: "{{working_directory}}/csr/{{item}}.csr.pem"
+    cert_private_key_path: "{{working_directory}}/certs/{{item}}/privkey.pem"
+    cert_path: "{{working_directory}}/certs/{{item}}/fullchain.pem"
+    trust_cert_path: "{{working_directory}}/certs/{{item}}/chain.pem"
 
 - name: create certificate directory
   file:
-    path: "{{volume}}/certs/{{item}}"
+    path: "{{working_directory}}/certs/{{item}}"
     state: directory
     owner: root
     group: root

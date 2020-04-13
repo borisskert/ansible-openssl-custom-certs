@@ -1,6 +1,6 @@
-# ansible-letsencrypt
+# ansible-openssl-self-signed-certs
 
-Installs letsencrypt as docker container.
+Creates self-signed certificates with OpenSSL
 
 ## Requirements
 
@@ -9,39 +9,50 @@ Installs letsencrypt as docker container.
 
 ## Tasks
 
-* Create volume paths for docker container
-* Create helper scripts
-* Setup cron job
-* Setup logrotate config
-* Create certificates (if not disabled)
+* Create working directory
+* Install pip package 'pyOpenSSL'
+* Create certificate authority (CA)
+* Create certificates for sites
 
 ## Role parameters
 
 | Variable      | Type | Mandatory? | Default | Description           |
 |---------------|------|------------|---------|-----------------------|
-| image_name    | text | no         | quay.io/letsencrypt/letsencrypt | Docker image name    |
-| image_version | text | no         | latest                          | Docker image version |
-| email         | text | yes        |                                 | Your e-mail address  |
-| keysize       | text | no         | 4096                            |                      |
-| config_volume | path as text | no | /srv/docker/letsencrypt/config  |                      |
-| data_volume   | path as text | no | /srv/docker/letsencrypt/data    |                      |
-| www_volume    | path as text | no | /srv/docker/letsencrypt/www     |                      |
-| script_path          | path as text | no | /opt/letsencrypt         |                      |
-| domains              | array of texts | no | []                     | list of your (sub-)domains you want to manage letsencrypt certificates |
-| force_cert_creation  | boolean        | no | yes                    | Try to create certificates instantly                                   |
+| working_directory | text | no     | /srv/openssl | Directory to which the certificates and keys are saved |
+| sites             | array of texts | no          | [] | The sites for which certificates will be created  |
+| ca_name           | text | no      | my_CA       | Your e-mail address                                    |
 
 ## Example Playbook
 
+### Requirement
+
+```yaml
+- name: create-self-signed-certs
+  src: https://github.com/borisskert/ansible-openssl-self-signed-certs.git
+  scm: git
+```
+
+### Playbook
+
 Usage (without parameters):
 
-    - hosts: servers
-      roles:
-      - install-docker-letsencrypt
+```yaml
+- hosts: test_machine
+
+  roles:
+    - role: create-self-signed-certs
+```
 
 Usage (with parameters):
 
-    - hosts: servers
-      roles:
-      - role: install-docker-letsencrypt
-        email: XXXX@gmail.com
-        www_volume: /srv/docker/letsencrypt/www
+```yaml
+- hosts: test_machine
+
+  roles:
+    - role: ansible-custom-certificates
+      ca_name: site.org
+      sites:
+        - my.first.site.org
+        - my.second.site.org
+        - my.third.site.org
+```
