@@ -1,5 +1,6 @@
 ---
-- include: create_volumes.yml
+- include: check-parameters.yml
+- include: create-volumes.yml
 
 - name: install pip for python 3
   apt:

@@ -5,7 +5,7 @@
     state: directory
     owner: root
     group: root
-    mode: 775
+    mode: 0755
 
 - name: create csr directory
   file:
@@ -13,7 +13,7 @@
     state: directory
     owner: root
     group: root
-    mode: 775
+    mode: 0755
 
 - name: create ca directory
   file:
@@ -21,7 +21,7 @@
     state: directory
     owner: root
     group: root
-    mode: 775
+    mode: 0755
 
 - name: create certs directory
   file:
@@ -29,4 +29,4 @@
     state: directory
     owner: root
     group: root
-    mode: 755
+    mode: 0755
