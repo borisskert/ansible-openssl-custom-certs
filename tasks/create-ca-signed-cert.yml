@@ -2,59 +2,49 @@
 - name: check 'item' parameter
   assert:
     that:
-      - "item != ''"
+      - item is defined
+      - item | length > 0
     fail_msg: "parameter 'item' incorrect or missing"
 
 - name: Setup variables for Cert
   set_fact:
-    ca_private_key_path: "{{working_directory}}/ca/{{ca_name}}.pem"
-    ca_cert_path: "{{working_directory}}/ca/{{ca_name}}.crt"
-    cert_csr_path: "{{working_directory}}/csr/{{item}}.csr.pem"
-    cert_directory: "{{certificates_directory}}/{{item}}"
-    cert_private_key_path: "{{certificates_directory}}/{{item}}/privkey.pem"
-    cert_path: "{{certificates_directory}}/{{item}}/fullchain.pem"
-    trust_cert_path: "{{certificates_directory}}/{{item}}/chain.pem"
-
-- name: Check if certificate directory exists
-  stat:
-    path: "{{cert_directory}}"
-  register: cert_folder_result
+    ca_private_key_path: "{{ working_directory }}/ca/{{ ca_name }}.pem"
+    ca_cert_path: "{{ working_directory }}/ca/{{ ca_name }}.crt"
+    cert_csr_path: "{{ working_directory }}/csr/{{ item }}.csr.pem"
+    cert_directory: "{{ certificates_directory }}/{{ item }}"
+    cert_private_key_path: "{{ certificates_directory }}/{{ item }}/privkey.pem"
+    cert_path: "{{ certificates_directory }}/{{ item }}/fullchain.pem"
+    trust_cert_path: "{{ certificates_directory }}/{{ item }}/chain.pem"
 
 - name: create certificate directory
   file:
-    path: "{{cert_directory}}"
+    path: "{{ cert_directory }}"
     state: directory
     owner: root
     group: root
-    mode: 755
-  when: not cert_folder_result.stat.exists
-  register: cert_folder
+    mode: 0750
 
 - name: Generate an OpenSSL RSA private key
   openssl_privatekey:
-    path: "{{cert_private_key_path}}"
+    path: "{{ cert_private_key_path }}"
     size: 4096
-  when: cert_folder.changed
 
 - name: Generate an OpenSSL Certificate Signing Request
   openssl_csr:
-    path: "{{cert_csr_path}}"
-    privatekey_path: "{{cert_private_key_path}}"
-    common_name: "{{item}}"
-  when: cert_folder.changed
+    path: "{{ cert_csr_path }}"
+    privatekey_path: "{{ cert_private_key_path }}"
+    common_name: "{{ item }}"
 
 - name: Generate an OpenSSL certificate signed with your own CA certificate
   openssl_certificate:
-    path: "{{cert_path}}"
-    csr_path: "{{cert_csr_path}}"
-    ownca_path: "{{ca_cert_path}}"
-    ownca_privatekey_path: "{{ca_private_key_path}}"
+    path: "{{ cert_path }}"
+    csr_path: "{{ cert_csr_path }}"
+    ownca_path: "{{ ca_cert_path }}"
+    ownca_privatekey_path: "{{ ca_private_key_path }}"
     provider: ownca
-  when: cert_folder.changed
 
 - name: Create the hard link to CA
   file:
-    src: "{{ca_cert_path}}"
-    dest: "{{trust_cert_path}}"
+    src: "{{ ca_cert_path }}"
+    dest: "{{ trust_cert_path }}"
     state: hard
-  when: cert_folder.changed

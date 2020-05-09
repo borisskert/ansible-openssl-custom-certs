@@ -1,36 +1,36 @@
 ---
 - name: Setup variables for CA
   set_fact:
-    ca_private_key_path: "{{working_directory}}/ca/{{ca_name}}.pem"
-    ca_csr_path: "{{working_directory}}/csr/{{ca_name}}.csr.pem"
-    ca_cert_path: "{{working_directory}}/ca/{{ca_name}}.crt"
+    ca_private_key_path: "{{ working_directory }}/ca/{{ ca_name }}.pem"
+    ca_csr_path: "{{ working_directory }}/csr/{{ ca_name }}.csr.pem"
+    ca_cert_path: "{{ working_directory }}/ca/{{ ca_name }}.crt"
 
 - name: Generate an OpenSSL RSA private key
   openssl_privatekey:
-    path: "{{ca_private_key_path}}"
+    path: "{{ ca_private_key_path }}"
     size: 4096
 
 - name: Generate an OpenSSL Certificate Signing Request
   openssl_csr:
-    path: "{{ca_csr_path}}"
-    privatekey_path: "{{ca_private_key_path}}"
-    common_name: "{{ca_name}}"
+    path: "{{ ca_csr_path }}"
+    privatekey_path: "{{ ca_private_key_path }}"
+    common_name: "{{ ca_name }}"
 
 - name: Check if certificate file exists
   stat:
-    path: "{{ca_cert_path}}"
+    path: "{{ ca_cert_path }}"
   register: cert_file_result
 
 - name: Generate a Self Signed OpenSSL certificate
   openssl_certificate:
-    path: "{{ca_cert_path}}"
-    privatekey_path: "{{ca_private_key_path}}"
-    csr_path: "{{ca_csr_path}}"
+    path: "{{ ca_cert_path }}"
+    privatekey_path: "{{ ca_private_key_path }}"
+    csr_path: "{{ ca_csr_path }}"
     provider: selfsigned
   when: not cert_file_result.stat.exists
 
 - name: download CA certificate
   fetch:
-    src: "{{ca_cert_path}}"
-    dest: "{{download_dir}}/{{ca_name}}.pem"
-    flat: yes
+    src: "{{ ca_cert_path }}"
+    dest: "{{ download_dir }}/{{ ca_name }}.pem"
+    flat: true

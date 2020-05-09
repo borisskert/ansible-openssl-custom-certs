@@ -1,32 +1,32 @@
 ---
 - name: create volume directory
   file:
-    path: "{{working_directory}}"
+    path: "{{ working_directory }}"
     state: directory
     owner: root
     group: root
-    mode: 0755
+    mode: 0750
 
 - name: create csr directory
   file:
-    path: "{{working_directory}}/csr"
+    path: "{{ working_directory }}/csr"
     state: directory
     owner: root
     group: root
-    mode: 0755
+    mode: 0750
 
 - name: create ca directory
   file:
-    path: "{{working_directory}}/ca"
+    path: "{{ working_directory }}/ca"
     state: directory
     owner: root
     group: root
-    mode: 0755
+    mode: 0750
 
 - name: create certs directory
   file:
-    path: "{{certificates_directory}}"
+    path: "{{ certificates_directory }}"
     state: directory
     owner: root
     group: root
-    mode: 0755
+    mode: 0750

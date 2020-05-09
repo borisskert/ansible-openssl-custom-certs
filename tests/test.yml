@@ -1,6 +1,6 @@
 ---
 - hosts: test_machine
-  become: yes
+  become: true
 
   roles:
     - role: ansible-custom-certificates
