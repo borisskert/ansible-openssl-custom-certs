@@ -58,3 +58,19 @@ Usage (with parameters):
         - my.second.site.org
         - my.third.site.org
 ```
+
+## Testing
+
+Requirements:
+
+* [Ansible](https://docs.ansible.com/)
+* [Molecule](https://molecule.readthedocs.io/en/latest/index.html)
+* [yamllint](https://yamllint.readthedocs.io/en/stable/#)
+* [ansible-lint](https://docs.ansible.com/ansible-lint/)
+* [Docker](https://docs.docker.com/)
+
+### Run within docker
+
+```shell script
+molecule test
+```

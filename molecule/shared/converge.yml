@@ -1,9 +1,10 @@
 ---
-- hosts: test_machine
+- name: Converge
+  hosts: all
   become: true
 
   roles:
-    - role: ansible-custom-certificates
+    - role: ansible-openssl-self-signed-certs
       sites:
         - my.first.site
         - my.second.site

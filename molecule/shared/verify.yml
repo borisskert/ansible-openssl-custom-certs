@@ -1,0 +1,95 @@
+---
+- name: Verify
+  hosts: all
+  become: true
+
+  tasks:
+    - name: Should create CA private key
+      stat:
+        path: /srv/openssl/ca/my_CA.crt
+      register: ca_private_key
+      failed_when: not ca_private_key.stat.exists
+
+    - name: Should create CA csr
+      stat:
+        path: /srv/openssl/csr/my_CA.csr.pem
+      register: ca_csr
+      failed_when: not ca_csr.stat.exists
+
+    - name: Should create CA certificate
+      stat:
+        path: /srv/openssl/ca/my_CA.crt
+      register: ca_crt
+      failed_when: not ca_crt.stat.exists
+
+    - name: Should create first site private key
+      stat:
+        path: /srv/openssl/certs/my.first.site/privkey.pem
+      register: first_site_private_key
+      failed_when: not first_site_private_key.stat.exists
+
+    - name: Should create first site csr
+      stat:
+        path: /srv/openssl/csr/my.first.site.csr.pem
+      register: first_site_csr
+      failed_when: not first_site_csr.stat.exists
+
+    - name: Should create first site certificate
+      stat:
+        path: /srv/openssl/certs/my.first.site/fullchain.pem
+      register: first_site_certificate
+      failed_when: not first_site_certificate.stat.exists
+
+    - name: Should create first site CA link
+      stat:
+        path: /srv/openssl/certs/my.first.site/chain.pem
+      register: first_site_ca_link
+      failed_when: not first_site_ca_link.stat.exists
+
+    - name: Should create second site private key
+      stat:
+        path: /srv/openssl/certs/my.second.site/privkey.pem
+      register: first_site_private_key
+      failed_when: not first_site_private_key.stat.exists
+
+    - name: Should create second site csr
+      stat:
+        path: /srv/openssl/csr/my.second.site.csr.pem
+      register: first_site_csr
+      failed_when: not first_site_csr.stat.exists
+
+    - name: Should create second site certificate
+      stat:
+        path: /srv/openssl/certs/my.second.site/fullchain.pem
+      register: first_site_certificate
+      failed_when: not first_site_certificate.stat.exists
+
+    - name: Should create second site CA link
+      stat:
+        path: /srv/openssl/certs/my.second.site/chain.pem
+      register: first_site_ca_link
+      failed_when: not first_site_ca_link.stat.exists
+
+    - name: Should create third site private key
+      stat:
+        path: /srv/openssl/certs/my.third.site/privkey.pem
+      register: first_site_private_key
+      failed_when: not first_site_private_key.stat.exists
+
+    - name: Should create third site csr
+      stat:
+        path: /srv/openssl/csr/my.third.site.csr.pem
+      register: first_site_csr
+      failed_when: not first_site_csr.stat.exists
+
+    - name: Should create third site certificate
+      stat:
+        path: /srv/openssl/certs/my.third.site/fullchain.pem
+      register: first_site_certificate
+      failed_when: not first_site_certificate.stat.exists
+
+    - name: Should create third site CA link
+      stat:
+        path: /srv/openssl/certs/my.third.site/chain.pem
+      register: first_site_ca_link
+      failed_when: not first_site_ca_link.stat.exists

@@ -1,0 +1,32 @@
+---
+dependency:
+  name: galaxy
+
+lint: |
+  set -e
+  yamllint . --strict
+  ansible-lint
+
+driver:
+  name: docker
+
+platforms:
+  - name: ansible-openssl-ubuntu
+    image: docker.io/pycontribs/ubuntu
+    pre_build_image: true
+  - name: ansible-openssl-debian
+    image: docker.io/pycontribs/debian
+    pre_build_image: true
+
+provisioner:
+  name: ansible
+  playbooks:
+    converge: ../shared/converge.yml
+    verify: ../shared/verify.yml
+  inventory:
+    host_vars:
+      ansible-openssl-debian:
+        ansible_python_interpreter: /usr/bin/python3
+
+verifier:
+  name: ansible

@@ -34,3 +34,4 @@
     src: "{{ ca_cert_path }}"
     dest: "{{ download_dir }}/{{ ca_name }}.pem"
     flat: true
+  changed_when: false
