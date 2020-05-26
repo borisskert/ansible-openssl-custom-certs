@@ -11,12 +11,40 @@ driver:
   name: docker
 
 platforms:
-  - name: ansible-openssl-ubuntu
-    image: docker.io/pycontribs/ubuntu
+  - name: ansible-openssl-focal
+    image: docker.io/borisskert/python3:focal
+    pull: true
     pre_build_image: true
-  - name: ansible-openssl-debian
-    image: docker.io/pycontribs/debian
+    volumes:
+      - '/var/run/docker.sock:/var/run/docker.sock'
+  - name: ansible-openssl-bionic
+    image: docker.io/borisskert/python3:bionic
+    pull: true
     pre_build_image: true
+    volumes:
+      - '/var/run/docker.sock:/var/run/docker.sock'
+  - name: ansible-openssl-xenial
+    image: docker.io/borisskert/python3:xenial
+    pull: true
+    pre_build_image: true
+    volumes:
+      - '/var/run/docker.sock:/var/run/docker.sock'
+  - name: ansible-openssl-buster
+    image: docker.io/borisskert/python3:buster
+    pull: true
+    pre_build_image: true
+    volumes:
+      - '/var/run/docker.sock:/var/run/docker.sock'
+    groups:
+      - debian
+  - name: ansible-openssl-stretch
+    image: docker.io/borisskert/python3:stretch
+    pull: true
+    pre_build_image: true
+    volumes:
+      - '/var/run/docker.sock:/var/run/docker.sock'
+    groups:
+      - debian
 
 provisioner:
   name: ansible
@@ -24,9 +52,20 @@ provisioner:
     converge: ../shared/converge.yml
     verify: ../shared/verify.yml
   inventory:
-    host_vars:
-      ansible-openssl-debian:
+    group_vars:
+      debian:
         ansible_python_interpreter: /usr/bin/python3
+    host_vars:
+      ansible-openssl-stretch:
+        ca_dir: docker-openssl-stretch
+      ansible-openssl-buster:
+        ca_dir: docker-openssl-buster
+      ansible-openssl-focal:
+        ca_dir: docker-openssl-focal
+      ansible-openssl-bionic:
+        ca_dir: docker-openssl-bionic
+      ansible-openssl-xenial:
+        ca_dir: docker-openssl-xenial
 
 verifier:
   name: ansible

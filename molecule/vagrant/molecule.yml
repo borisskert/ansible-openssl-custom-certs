@@ -1,0 +1,50 @@
+---
+dependency:
+  name: galaxy
+
+driver:
+  name: vagrant
+  provider:
+    name: virtualbox
+
+platforms:
+  - name: ansible-openssl-xenial
+    box: ubuntu/xenial64
+  - name: ansible-openssl-bionic
+    box: ubuntu/bionic64
+  - name: ansible-openssl-focal
+    box: ubuntu/focal64
+    instance_raw_config_args:
+      - 'vm.boot_timeout = 600'
+  - name: ansible-openssl-stretch
+    box: debian/stretch64
+    groups:
+      - debian
+  - name: ansible-openssl-buster
+    box: debian/buster64
+    groups:
+      - debian
+
+provisioner:
+  name: ansible
+  playbooks:
+    converge: ../shared/converge.yml
+    verify: ../shared/verify.yml
+  inventory:
+    group_vars:
+      debian:
+        ansible_python_interpreter: /usr/bin/python3
+    host_vars:
+      ansible-openssl-stretch:
+        ca_dir: vagrant-openssl-stretch
+      ansible-openssl-buster:
+        ca_dir: vagrant-openssl-buster
+      ansible-openssl-focal:
+        ca_dir: vagrant-openssl-focal
+      ansible-openssl-bionic:
+        ca_dir: vagrant-openssl-bionic
+      ansible-openssl-xenial:
+        ca_dir: vagrant-openssl-xenial
+
+verifier:
+  name: ansible
