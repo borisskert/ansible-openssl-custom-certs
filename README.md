@@ -18,11 +18,11 @@ Creates self-signed certificates with OpenSSL
 
 | Variable      | Type | Mandatory? | Default | Description           |
 |---------------|------|------------|---------|-----------------------|
-| working_directory | text | no     | /srv/openssl | Directory to which the CA and CSRs are saved |
-| certificates_directory | text | no     | /srv/openssl/certs | Directory to which the certificates and keys are saved |
-| sites                  | array of texts | no | []           | The sites for which certificates will be created       |
-| ca_name                | text | no      | my_CA             | Your certificate name                                  |
-| download_dir           | text | no      | ./.tmp            | Download directory where the created CA cert will be stored locally |
+| openssl_working_directory | text | no     | /srv/openssl | Directory to which the CA and CSRs are saved |
+| openssl_certificates_directory | text | no     | /srv/openssl/certs | Directory to which the certificates and keys are saved |
+| openssl_sites                  | array of texts | no | []           | The sites for which certificates will be created       |
+| openssl_ca_name                | text | no      | my_CA             | Your certificate name                                  |
+| openssl_download_dir           | text | no      | ./.tmp            | Download directory where the created CA cert will be stored locally |
 
 ## Example Playbook
 
@@ -52,8 +52,8 @@ Usage (with parameters):
 
   roles:
     - role: create-self-signed-certs
-      ca_name: site.org
-      sites:
+      openssl_ca_name: site.org
+      openssl_sites:
         - my.first.site.org
         - my.second.site.org
         - my.third.site.org

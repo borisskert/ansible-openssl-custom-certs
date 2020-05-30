@@ -14,4 +14,4 @@
 - include: create-ca.yml
 
 - include: create-ca-signed-cert.yml
-  with_items: "{{ sites }}"
+  with_items: "{{ openssl_sites }}"

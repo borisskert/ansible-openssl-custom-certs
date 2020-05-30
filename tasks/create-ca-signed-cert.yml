@@ -8,13 +8,15 @@
 
 - name: Setup variables for Cert
   set_fact:
-    ca_private_key_path: "{{ working_directory }}/ca/{{ ca_name }}.pem"
-    ca_cert_path: "{{ working_directory }}/ca/{{ ca_name }}.crt"
-    cert_csr_path: "{{ working_directory }}/csr/{{ item }}.csr.pem"
-    cert_directory: "{{ certificates_directory }}/{{ item }}"
-    cert_private_key_path: "{{ certificates_directory }}/{{ item }}/privkey.pem"
-    cert_path: "{{ certificates_directory }}/{{ item }}/fullchain.pem"
-    trust_cert_path: "{{ certificates_directory }}/{{ item }}/chain.pem"
+    ca_private_key_path:
+      "{{ openssl_working_directory }}/ca/{{ openssl_ca_name }}.pem"
+    ca_cert_path: "{{ openssl_working_directory }}/ca/{{ openssl_ca_name }}.crt"
+    cert_csr_path: "{{ openssl_working_directory }}/csr/{{ item }}.csr.pem"
+    cert_directory: "{{ openssl_certificates_directory }}/{{ item }}"
+    cert_private_key_path:
+      "{{ openssl_certificates_directory }}/{{ item }}/privkey.pem"
+    cert_path: "{{ openssl_certificates_directory }}/{{ item }}/fullchain.pem"
+    trust_cert_path: "{{ openssl_certificates_directory }}/{{ item }}/chain.pem"
 
 - name: create certificate directory
   file:

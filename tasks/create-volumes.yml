@@ -1,7 +1,7 @@
 ---
 - name: create volume directory
   file:
-    path: "{{ working_directory }}"
+    path: "{{ openssl_working_directory }}"
     state: directory
     owner: root
     group: root
@@ -9,7 +9,7 @@
 
 - name: create csr directory
   file:
-    path: "{{ working_directory }}/csr"
+    path: "{{ openssl_working_directory }}/csr"
     state: directory
     owner: root
     group: root
@@ -17,7 +17,7 @@
 
 - name: create ca directory
   file:
-    path: "{{ working_directory }}/ca"
+    path: "{{ openssl_working_directory }}/ca"
     state: directory
     owner: root
     group: root
@@ -25,7 +25,7 @@
 
 - name: create certs directory
   file:
-    path: "{{ certificates_directory }}"
+    path: "{{ openssl_certificates_directory }}"
     state: directory
     owner: root
     group: root

@@ -5,8 +5,8 @@
 
   roles:
     - role: ansible-openssl-self-signed-certs
-      download_dir: ".tmp/{{ ca_dir }}"
-      sites:
+      openssl_download_dir: ".tmp/{{ ca_dir }}"
+      openssl_sites:
         - my.first.site
         - my.second.site
         - my.third.site

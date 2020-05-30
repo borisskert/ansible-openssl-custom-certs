@@ -1,14 +1,14 @@
 ---
-- name: Check 'certificates_directory' parameter
+- name: Check 'openssl_certificates_directory' parameter
   assert:
     that:
-      - "certificates_directory is defined"
-      - "certificates_directory | length > 0"
-    fail_msg: "parameter 'certificates_directory' is missing"
+      - "openssl_certificates_directory is defined"
+      - "openssl_certificates_directory | length > 0"
+    fail_msg: "parameter 'openssl_certificates_directory' is missing"
 
-- name: Check 'working_directory' parameter
+- name: Check 'openssl_working_directory' parameter
   assert:
     that:
-      - "working_directory is defined"
-      - "working_directory | length > 0"
-    fail_msg: "parameter 'working_directory' is missing"
+      - "openssl_working_directory is defined"
+      - "openssl_working_directory | length > 0"
+    fail_msg: "parameter 'openssl_working_directory' is missing"

@@ -1,9 +1,9 @@
 ---
-working_directory: /srv/openssl
-certificates_directory: /srv/openssl/certs
+openssl_working_directory: /srv/openssl
+openssl_certificates_directory: /srv/openssl/certs
 
-sites: []
+openssl_sites: []
 
-ca_name: my_CA
+openssl_ca_name: my_CA
 
-download_dir: ./.tmp
+openssl_download_dir: ./.tmp

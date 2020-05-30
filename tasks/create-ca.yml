@@ -1,9 +1,11 @@
 ---
 - name: Setup variables for CA
   set_fact:
-    ca_private_key_path: "{{ working_directory }}/ca/{{ ca_name }}.pem"
-    ca_csr_path: "{{ working_directory }}/csr/{{ ca_name }}.csr.pem"
-    ca_cert_path: "{{ working_directory }}/ca/{{ ca_name }}.crt"
+    ca_private_key_path:
+      "{{ openssl_working_directory }}/ca/{{ openssl_ca_name }}.pem"
+    ca_csr_path:
+      "{{ openssl_working_directory }}/csr/{{ openssl_ca_name }}.csr.pem"
+    ca_cert_path: "{{ openssl_working_directory }}/ca/{{ openssl_ca_name }}.crt"
 
 - name: Generate an OpenSSL RSA private key
   openssl_privatekey:
@@ -14,7 +16,7 @@
   openssl_csr:
     path: "{{ ca_csr_path }}"
     privatekey_path: "{{ ca_private_key_path }}"
-    common_name: "{{ ca_name }}"
+    common_name: "{{ openssl_ca_name }}"
 
 - name: Check if certificate file exists
   stat:
@@ -32,6 +34,6 @@
 - name: download CA certificate
   fetch:
     src: "{{ ca_cert_path }}"
-    dest: "{{ download_dir }}/{{ ca_name }}.pem"
+    dest: "{{ openssl_download_dir }}/{{ openssl_ca_name }}.pem"
     flat: true
   changed_when: false
