@@ -7,3 +7,6 @@ openssl_sites: []
 openssl_ca_name: my_CA
 
 openssl_download_dir: ./.tmp
+
+openssl_ca_key_size: 4096
+openssl_cert_key_size: 4096

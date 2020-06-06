@@ -23,6 +23,8 @@ Creates self-signed certificates with OpenSSL
 | openssl_sites                  | array of texts | no | []           | The sites for which certificates will be created       |
 | openssl_ca_name                | text | no      | my_CA             | Your certificate name                                  |
 | openssl_download_dir           | text | no      | ./.tmp            | Download directory where the created CA cert will be stored locally |
+| openssl_ca_key_size            | number | no    | 4096              | Defines the CA key size |
+| openssl_cert_key_size          | number | no    | 4096              | Defines the certificates key size |
 
 ## Example Playbook
 
@@ -53,6 +55,8 @@ Usage (with parameters):
   roles:
     - role: create-self-signed-certs
       openssl_ca_name: site.org
+      openssl_ca_key_size: 8192
+      openssl_cert_key_size: 2048
       openssl_sites:
         - my.first.site.org
         - my.second.site.org

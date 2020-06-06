@@ -6,6 +6,8 @@
   roles:
     - role: ansible-openssl-self-signed-certs
       openssl_download_dir: ".tmp/{{ ca_dir }}"
+      openssl_ca_key_size: 8192
+      openssl_cert_key_size: 2048
       openssl_sites:
         - my.first.site
         - my.second.site
