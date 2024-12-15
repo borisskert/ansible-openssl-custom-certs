@@ -8,20 +8,18 @@ driver:
     name: virtualbox
 
 platforms:
-  - name: ansible-openssl-xenial
-    box: ubuntu/xenial64
-  - name: ansible-openssl-bionic
-    box: ubuntu/bionic64
-  - name: ansible-openssl-focal
-    box: ubuntu/focal64
-    instance_raw_config_args:
-      - 'vm.boot_timeout = 600'
-  - name: ansible-openssl-stretch
-    box: debian/stretch64
+  - name: vagrant-openssl-noble
+    box: cloud-image/ubuntu-24.04
+  - name: vagrant-openssl-jammy
+    box: cloud-image/ubuntu-22.04
+  - name: vagrant-openssl-focal
+    box: cloud-image/ubuntu-20.04
+  - name: vagrant-openssl-bookworm
+    box: cloud-image/debian-12
     groups:
       - debian
-  - name: ansible-openssl-buster
-    box: debian/buster64
+  - name: vagrant-openssl-bullseye
+    box: cloud-image/debian-11
     groups:
       - debian
 
@@ -35,16 +33,16 @@ provisioner:
       debian:
         ansible_python_interpreter: /usr/bin/python3
     host_vars:
-      ansible-openssl-stretch:
-        ca_dir: vagrant-openssl-stretch
-      ansible-openssl-buster:
-        ca_dir: vagrant-openssl-buster
-      ansible-openssl-focal:
+      vagrant-openssl-noble:
+        ca_dir: vagrant-openssl-noble
+      vagrant-openssl-jammy:
+        ca_dir: vagrant-openssl-jammy
+      vagrant-openssl-focal:
         ca_dir: vagrant-openssl-focal
-      ansible-openssl-bionic:
-        ca_dir: vagrant-openssl-bionic
-      ansible-openssl-xenial:
-        ca_dir: vagrant-openssl-xenial
+      vagrant-openssl-bookworm:
+        ca_dir: vagrant-openssl-bookworm
+      vagrant-openssl-bullseye:
+        ca_dir: vagrant-openssl-bullseye
 
 verifier:
   name: ansible

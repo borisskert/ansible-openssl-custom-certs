@@ -1,17 +1,7 @@
 ---
-- include: check-parameters.yml
-- include: create-volumes.yml
+- include_tasks: check-parameters.yml
+- include_tasks: create-volumes.yml
+- include_tasks: create-ca.yml
 
-- name: install pip for python 3
-  apt:
-    name: python3-pip
-    update_cache: true
-
-- name: install pyOpenSSL pip package
-  pip:
-    name: pyOpenSSL
-
-- include: create-ca.yml
-
-- include: create-ca-signed-cert.yml
+- include_tasks: create-ca-signed-cert.yml
   with_items: "{{ openssl_sites }}"
