@@ -5,12 +5,11 @@ Creates self-signed certificates with OpenSSL
 ## Requirements
 
 * Python
-* Docker
+* Docker (for testing only)
 
 ## Tasks
 
 * Create working directory
-* Install pip package 'pyOpenSSL'
 * Create certificate authority (CA)
 * Create certificates for sites
 
