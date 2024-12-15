@@ -11,12 +11,49 @@ driver:
   name: docker
 
 platforms:
+  - name: ansible-openssl-noble
+    image: docker.io/borisskert/python3:noble
+    pull: true
+    pre_build_image: true
+    volumes:
+      - '/var/run/docker.sock:/var/run/docker.sock'
+    groups:
+      - docker
+  - name: ansible-openssl-jammy
+    image: docker.io/borisskert/python3:jammy
+    pull: true
+    pre_build_image: true
+    volumes:
+      - '/var/run/docker.sock:/var/run/docker.sock'
+    groups:
+      - docker
   - name: ansible-openssl-focal
     image: docker.io/borisskert/python3:focal
     pull: true
     pre_build_image: true
     volumes:
       - '/var/run/docker.sock:/var/run/docker.sock'
+    groups:
+      - docker
+
+  - name: ansible-openssl-bookworm
+    image: docker.io/borisskert/python3:bookworm
+    pull: true
+    pre_build_image: true
+    volumes:
+      - '/var/run/docker.sock:/var/run/docker.sock'
+    groups:
+      - docker
+      - debian
+  - name: ansible-openssl-bullseye
+    image: docker.io/borisskert/python3:bullseye
+    pull: true
+    pre_build_image: true
+    volumes:
+      - '/var/run/docker.sock:/var/run/docker.sock'
+    groups:
+      - docker
+      - debian
 
 provisioner:
   name: ansible
@@ -28,16 +65,16 @@ provisioner:
       debian:
         ansible_python_interpreter: /usr/bin/python3
     host_vars:
-      ansible-openssl-stretch:
-        ca_dir: docker-openssl-stretch
-      ansible-openssl-buster:
-        ca_dir: docker-openssl-buster
+      ansible-openssl-noble:
+        ca_dir: docker-openssl-noble
+      ansible-openssl-jammy:
+        ca_dir: docker-openssl-jammy
       ansible-openssl-focal:
         ca_dir: docker-openssl-focal
-      ansible-openssl-bionic:
-        ca_dir: docker-openssl-bionic
-      ansible-openssl-xenial:
-        ca_dir: docker-openssl-xenial
+      ansible-openssl-bookworm:
+        ca_dir: docker-openssl-bookworm
+      ansible-openssl-bullseye:
+        ca_dir: docker-openssl-bullseye
 
 verifier:
   name: ansible

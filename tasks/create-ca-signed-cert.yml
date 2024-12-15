@@ -8,13 +8,11 @@
 
 - name: Setup variables for Cert
   set_fact:
-    ca_private_key_path:
-      "{{ openssl_working_directory }}/ca/{{ openssl_ca_name }}.pem"
+    ca_private_key_path: "{{ openssl_working_directory }}/ca/{{ openssl_ca_name }}.pem"
     ca_cert_path: "{{ openssl_working_directory }}/ca/{{ openssl_ca_name }}.crt"
     cert_csr_path: "{{ openssl_working_directory }}/csr/{{ item }}.csr.pem"
     cert_directory: "{{ openssl_certificates_directory }}/{{ item }}"
-    cert_private_key_path:
-      "{{ openssl_certificates_directory }}/{{ item }}/privkey.pem"
+    cert_private_key_path: "{{ openssl_certificates_directory }}/{{ item }}/privkey.pem"
     cert_path: "{{ openssl_certificates_directory }}/{{ item }}/fullchain.pem"
     trust_cert_path: "{{ openssl_certificates_directory }}/{{ item }}/chain.pem"
 
@@ -27,26 +25,25 @@
     mode: 0750
 
 - name: Generate an OpenSSL RSA private key
-  openssl_privatekey:
-    path: "{{ cert_private_key_path }}"
-    size: "{{ openssl_cert_key_size }}"
+  shell: |
+    openssl genrsa -out "{{ cert_private_key_path }}" {{ openssl_cert_key_size }}
+  args:
+    creates: "{{ cert_private_key_path }}"
 
 - name: Generate an OpenSSL Certificate Signing Request
-  openssl_csr:
-    path: "{{ cert_csr_path }}"
-    privatekey_path: "{{ cert_private_key_path }}"
-    common_name: "{{ item }}"
+  shell: |
+    openssl req -new -key "{{ cert_private_key_path }}" -out "{{ cert_csr_path }}" -subj "/CN={{ item }}"
+  args:
+    creates: "{{ cert_csr_path }}"
 
 - name: Generate an OpenSSL certificate signed with your own CA certificate
-  openssl_certificate:
-    path: "{{ cert_path }}"
-    csr_path: "{{ cert_csr_path }}"
-    ownca_path: "{{ ca_cert_path }}"
-    ownca_privatekey_path: "{{ ca_private_key_path }}"
-    provider: ownca
+  shell: |
+    openssl x509 -req -in "{{ cert_csr_path }}" -CA "{{ ca_cert_path }}" -CAkey "{{ ca_private_key_path }}" -CAcreateserial -out "{{ cert_path }}" -days 365
+  args:
+    creates: "{{ cert_path }}"
 
 - name: Create the hard link to CA
-  file:
-    src: "{{ ca_cert_path }}"
-    dest: "{{ trust_cert_path }}"
-    state: hard
+  shell: |
+    ln -f "{{ ca_cert_path }}" "{{ trust_cert_path }}"
+  args:
+    creates: "{{ trust_cert_path }}"

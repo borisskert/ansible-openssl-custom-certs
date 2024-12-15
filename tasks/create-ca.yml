@@ -1,22 +1,30 @@
 ---
 - name: Setup variables for CA
   set_fact:
-    ca_private_key_path:
-      "{{ openssl_working_directory }}/ca/{{ openssl_ca_name }}.pem"
-    ca_csr_path:
-      "{{ openssl_working_directory }}/csr/{{ openssl_ca_name }}.csr.pem"
+    ca_private_key_path: "{{ openssl_working_directory }}/ca/{{ openssl_ca_name }}.pem"
+    ca_csr_path: "{{ openssl_working_directory }}/csr/{{ openssl_ca_name }}.csr.pem"
     ca_cert_path: "{{ openssl_working_directory }}/ca/{{ openssl_ca_name }}.crt"
 
+- name: Create directories for keys and CSR
+  file:
+    path: "{{ item }}"
+    state: directory
+    mode: '0755'
+  loop:
+    - "{{ openssl_working_directory }}/ca"
+    - "{{ openssl_working_directory }}/csr"
+
 - name: Generate an OpenSSL RSA private key
-  openssl_privatekey:
-    path: "{{ ca_private_key_path }}"
-    size: "{{ openssl_ca_key_size }}"
+  shell: |
+    openssl genrsa -out "{{ ca_private_key_path }}" {{ openssl_ca_key_size }}
+  args:
+    creates: "{{ ca_private_key_path }}"
 
 - name: Generate an OpenSSL Certificate Signing Request
-  openssl_csr:
-    path: "{{ ca_csr_path }}"
-    privatekey_path: "{{ ca_private_key_path }}"
-    common_name: "{{ openssl_ca_name }}"
+  shell: |
+    openssl req -new -key "{{ ca_private_key_path }}" -out "{{ ca_csr_path }}" -subj "/CN={{ openssl_ca_name }}"
+  args:
+    creates: "{{ ca_csr_path }}"
 
 - name: Check if certificate file exists
   stat:
@@ -24,14 +32,11 @@
   register: cert_file_result
 
 - name: Generate a Self Signed OpenSSL certificate
-  openssl_certificate:
-    path: "{{ ca_cert_path }}"
-    privatekey_path: "{{ ca_private_key_path }}"
-    csr_path: "{{ ca_csr_path }}"
-    provider: selfsigned
+  shell: |
+    openssl x509 -req -in "{{ ca_csr_path }}" -signkey "{{ ca_private_key_path }}" -out "{{ ca_cert_path }}" -days 365
   when: not cert_file_result.stat.exists
 
-- name: download CA certificate
+- name: Download CA certificate
   fetch:
     src: "{{ ca_cert_path }}"
     dest: "{{ openssl_download_dir }}/{{ openssl_ca_name }}.pem"

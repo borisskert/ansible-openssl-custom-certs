@@ -16,15 +16,15 @@ Creates self-signed certificates with OpenSSL
 
 ## Role parameters
 
-| Variable      | Type | Mandatory? | Default | Description           |
-|---------------|------|------------|---------|-----------------------|
-| openssl_working_directory | text | no     | /srv/openssl | Directory to which the CA and CSRs are saved |
-| openssl_certificates_directory | text | no     | /srv/openssl/certs | Directory to which the certificates and keys are saved |
-| openssl_sites                  | array of texts | no | []           | The sites for which certificates will be created       |
-| openssl_ca_name                | text | no      | my_CA             | Your certificate name                                  |
-| openssl_download_dir           | text | no      | ./.tmp            | Download directory where the created CA cert will be stored locally |
-| openssl_ca_key_size            | number | no    | 4096              | Defines the CA key size |
-| openssl_cert_key_size          | number | no    | 4096              | Defines the certificates key size |
+| Variable                       | Type           | Mandatory? | Default            | Description                                                         |
+|--------------------------------|----------------|------------|--------------------|---------------------------------------------------------------------|
+| openssl_working_directory      | text           | no         | /srv/openssl       | Directory to which the CA and CSRs are saved                        |
+| openssl_certificates_directory | text           | no         | /srv/openssl/certs | Directory to which the certificates and keys are saved              |
+| openssl_sites                  | array of texts | no         | []                 | The sites for which certificates will be created                    |
+| openssl_ca_name                | text           | no         | my_CA              | Your certificate name                                               |
+| openssl_download_dir           | text           | no         | ./.tmp             | Download directory where the created CA cert will be stored locally |
+| openssl_ca_key_size            | number         | no         | 4096               | Defines the CA key size                                             |
+| openssl_cert_key_size          | number         | no         | 4096               | Defines the certificates key size                                   |
 
 ## Example Playbook
 
